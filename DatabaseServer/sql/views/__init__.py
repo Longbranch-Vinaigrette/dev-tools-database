@@ -1,8 +1,6 @@
 import json
-import os
 
 from django.http import HttpResponse
-print("CWD: ", os.getcwd())
 
 
 def index(request):

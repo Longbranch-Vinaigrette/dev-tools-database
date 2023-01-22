@@ -23,7 +23,7 @@ def main():
 if __name__ == '__main__':
     # Tests
     routes_path = f"{os.getcwd()}{os.path.sep}src{os.path.sep}routes"
-    tests.test_dynamic_imports_routes(routes_path, debug=True, show_output=True)
+    tests.test_dynamic_imports_routes(routes_path)
 
     # Main stuff
     main()

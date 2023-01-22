@@ -18,4 +18,7 @@ urlpatterns = [
     path("RepositorySettings/discoverAndReset/",
          RepositorySettings.discover_and_reset,
          name="RepositorySettings/discoverAndReset/"),
+    path("RepositorySettings/getRepository/",
+         RepositorySettings.get_repository,
+         name="RepositorySettings/getRepository/"),
 ]

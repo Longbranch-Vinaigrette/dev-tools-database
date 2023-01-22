@@ -1,22 +1,14 @@
-import json
 import os
 
 from django.http import HttpResponse
+from ..models import Question
 print("CWD: ", os.getcwd())
 
 
 def index(request):
-    print("Request body: ")
-    print(request.body)
-    data = {
-        "debug": {
-            "message": "Success"
-        }
-    }
-    res = HttpResponse(json.dumps(data))
-    res.headers["Content-Type"] = "application/json"
-
-    return res
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    output = ", ".join([q.question_text for q in latest_question_list])
+    return HttpResponse(output)
 
 
 def detail(request, question_id):

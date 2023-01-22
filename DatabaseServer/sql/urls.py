@@ -9,9 +9,13 @@ from django.urls import path
 from . import views
 from .views import RepositorySettings
 
+app_name = "sql"
 urlpatterns = [
     # ex: /sql/
     path("", views.index, name="index"),
     # ex: /sql/RepositorySettings/getAll
-    path("RepositorySettings/getAll/", RepositorySettings.get_all, name="RepositorySettings/getAll/")
+    path("RepositorySettings/getAll/", RepositorySettings.get_all, name="RepositorySettings/getAll/"),
+    path("RepositorySettings/discoverAndReset/",
+         RepositorySettings.discover_and_reset,
+         name="RepositorySettings/discoverAndReset/"),
 ]

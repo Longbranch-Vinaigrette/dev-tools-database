@@ -70,6 +70,7 @@ def get_all(request: HttpRequest):
 
 
 def get_repository(request: HttpRequest):
+    """Get local repository settings by username and repository name"""
     try:
         if "Content-Type" in request.headers:
             if request.headers["Content-Type"] == "application/json":
@@ -106,7 +107,7 @@ def get_repository(request: HttpRequest):
     except Exception as ex:
         data = {
             "debug": {
-                "message": "Unknown error",
+                "message": "Unknown error, it's likely that the table doesn't exist.",
                 "error": True,
                 "field": "",
                 "state": "danger"

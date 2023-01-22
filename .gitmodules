@@ -1,0 +1,6 @@
+[submodule "sqlite3_utils"]
+	path = DatabaseServer/submodules/sqlite3_utils
+	url = git@github.com:Perseverancia-company/sub.sqlite3-utils.git
+[submodule "dev_tools_utils"]
+	path = DatabaseServer/submodules/dev_tools_utils
+	url = git@github.com:Perseverancia-company/sub.dev-tools-utils.git

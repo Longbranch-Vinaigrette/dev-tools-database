@@ -1,7 +1,6 @@
 import json
 import os
 
-# Create your views here.
 from django.http import HttpResponse
 print("CWD: ", os.getcwd())
 
@@ -18,3 +17,5 @@ def index(request):
     res.headers["Content-Type"] = "application/json"
 
     return res
+
+

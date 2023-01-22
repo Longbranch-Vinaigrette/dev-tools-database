@@ -1,22 +1,28 @@
 import json
 import os
 
-from src.submodules.sub_sqlite3_utils import Sqlite3Utils
-
-from src.utils import OStuff
+from ..submodules.sqlite3_utils import Sqlite3Utils
+from ..submodules.dev_tools_utils.data_configuration import DataLocation, LocalData, DBPath
 
 
 class RepositorySettings:
-    repositories_path = f"{OStuff.get_data_path()}/repositories"
+    repositories_path = f"{DataLocation.get_data_path()}/repositories"
 
     def __init__(self, debug: bool = False):
         self.debug = debug
 
+        if self.debug:
+            print("\nRepositorySettings -> __init__():")
+
         # Get the filename of the DB
-        with open(f"{os.getcwd()}{os.path.sep}local_data.json", "r") as f:
-            local_data = json.load(f)
-            db_filename = local_data["DBFilename"]
-        db_path = OStuff.get_sql_db_path(db_filename)
+        db_filename = "devtools.db"
+        try:
+            with open(LocalData.get_local_settings_path(), "r") as f:
+                local_data = json.load(f)
+                db_filename = local_data["DBFilename"] if local_data["DBFilename"] else "devtools.db"
+        except:
+            db_filename = "devtools.db"
+        db_path = DBPath.get_sql_db_path(db_filename)
         self.sql_repository_settings = Sqlite3Utils(
             db_path,
             "repository_settings",

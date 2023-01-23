@@ -42,7 +42,7 @@ try:
     """
     capture_pidA = args.store_pid or args.capture_pid
 
-    self_app_management = SelfAppManager(start_cmds, capture_pid=capture_pidA, debug=True)
+    self_app_management = SelfAppManager(start_cmds, capture_pid=capture_pidA)
     if args.start:
         self_app_management.start_app()
 

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "sql.apps.SqlConfig",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +53,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# Reference/s
+# https://github.com/adamchainz/django-cors-headers#setup
+# https://stackoverflow.com/questions/35760943/how-can-i-enable-cors-on-django-rest-framework
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:37002",
+    "http://127.0.0.1:37002",
+    "http://localhost:37001",
+    "http://127.0.0.1:37001",
+    "http://localhost:37000",
+    "http://127.0.0.1:37000",
 ]
 
 ROOT_URLCONF = 'DatabaseServer.urls'

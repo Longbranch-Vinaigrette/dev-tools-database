@@ -1,0 +1,13 @@
+{
+  "devtools": {
+    "name": "DevTools Database",
+    "repositoryName": "dev-tools-database",
+    "version": "v1.0.0",
+    "description": "Database manager for DevTools",
+    "appType": "Django",
+    "commands": {
+      "setup": "pip3.10 install django",
+      "start": "./start.sh"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 .idea/
 # Local data
 .devtools/
+local_data.json
 
 
 # Byte-compiled / optimized / DLL files

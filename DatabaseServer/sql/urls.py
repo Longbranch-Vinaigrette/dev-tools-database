@@ -12,7 +12,7 @@ from src.submodules.dev_tools_utils.dynamic_imports.django_routes import DjangoR
 app_name = "sql"
 
 routes_path = f"{os.getcwd()}{os.path.sep}src{os.path.sep}routes"
-djroutes = DjangoRoutes(routes_path, handle_request=False, debug=True)
+djroutes = DjangoRoutes(routes_path, handle_request=False)
 urlpatterns = djroutes.get_routes_as_urlpatterns()
 
 debug = False

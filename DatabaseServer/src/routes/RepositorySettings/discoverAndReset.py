@@ -1,7 +1,7 @@
 import json
 from django.http import HttpResponse, HttpRequest
 
-from src.dbs.RepositorySettings import RepositorySettings
+from src.submodules.dev_tools_utils.dbs.RepositorySettings import RepositorySettings
 from src.submodules.dev_tools_utils.data_configuration import DataLocation
 from src.submodules.dev_tools_utils.local_repository_manager import LocalRepositoryManager
 

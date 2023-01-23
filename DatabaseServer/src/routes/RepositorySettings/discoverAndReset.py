@@ -12,6 +12,7 @@ class Main:
 
     def get(self, request: HttpRequest):
         """Discover repositories and reset data to default values"""
+        print("\ndiscoverAndReset -> get():")
         try:
             # Database
             repository_settings = RepositorySettings()
@@ -31,7 +32,8 @@ class Main:
 
             data = {
                 "debug": {
-                    "message": "Success"
+                    "message": "Data reset successful.",
+                    "state": "success"
                 }
             }
         except:
@@ -47,4 +49,11 @@ class Main:
         res = HttpResponse(json.dumps(data))
         res.headers["Content-Type"] = "application/json"
         return res
+
+    def handle_request(self, req: HttpRequest):
+        """Handle request"""
+        if req.method == "GET":
+            return self.get(req)
+        else:
+            raise Exception("This route doesn't handle the given method.")
 

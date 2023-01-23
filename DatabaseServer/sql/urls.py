@@ -5,6 +5,7 @@ Reference/s:
 https://docs.djangoproject.com/en/4.1/intro/tutorial01/
 """
 import os
+import pprint
 
 from django.urls import path
 
@@ -26,6 +27,7 @@ app_name = "sql"
 #          name="RepositorySettings/getRepository/"),
 # ]
 routes_path = f"{os.getcwd()}{os.path.sep}src{os.path.sep}routes"
-djroutes = DjangoRoutes(routes_path)
+djroutes = DjangoRoutes(routes_path, handle_request=False)
 urlpatterns = djroutes.get_routes_as_urlpatterns()
-print("Url patterns: ", urlpatterns)
+print("Urlpatterns:")
+pprint.pprint(urlpatterns)

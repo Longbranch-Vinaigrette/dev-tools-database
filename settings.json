@@ -7,7 +7,8 @@
     "appType": "Django",
     "commands": {
       "setup": "pip3.10 install django",
-      "start": "./start.sh"
+      "start": "python3.10 main.py --start --capture-pid",
+      "stop": "python3.10 main.py --stop"
     }
   }
 }

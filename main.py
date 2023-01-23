@@ -1,7 +1,8 @@
 import argparse
-import subprocess
+import os
+import signal
 
-from DatabaseServer.src.submodules.dev_tools_utils.data_configuration import LocalData
+from DatabaseServer.src.submodules.dev_tools_utils.app_manager.SelfAppManager import SelfAppManager
 
 
 # Instantiate the parser
@@ -10,50 +11,43 @@ parser.add_argument("--start", action="store_true",
                     help="Start server in the background.")
 parser.add_argument("--stop", action="store_true",
                     help="Stop server in the background.")
+parser.add_argument("--store-pid", action="store_true",
+                    help="Store the pid in local_data.json.")
+parser.add_argument("--capture-pid", action="store_true",
+                    help="Store the pid in local_data.json.")
 
 # Parse args
 args = parser.parse_args()
 
 
-def start_app():
-    print("start_app()")
-    raw_cmds = f"""
-    cd DatabaseServer && python3.10 manage.py runserver 37002;
-    """
-
-    parsed_cmds = bytes(raw_cmds, 'utf8')
-    print("Parsed cmds: ", parsed_cmds)
-
-    # For subprocess.Popen()
-    # It's recommended to use fully qualified paths, or
-    # some things might be overriden
-    process: subprocess.Popen = subprocess.Popen(["/bin/bash"],
-                                                 stdin=subprocess.PIPE,
-                                                 stdout=subprocess.PIPE,
-                                                 shell=True)
-    print("Process started")
-    print("Its PID: ", process.pid)
-    print("Pid type: ", type(process.pid))
-    LocalData.save_data(
-        {
-            "subprocesses": {
-                "pids": [process.pid]
-            }
-        },
-        True)
-
-    out, err = process.communicate(parsed_cmds)
-    print("Communicated with subprocess")
-    print(out.decode("utf-8"))
+# Reference/s:
+# https://stackoverflow.com/questions/320232/ensuring-subprocesses-are-dead-on-exiting-python-program
+# Create new process group, become its leader
+os.setpgrp()
 
 
-def stop_app():
-    print("\nstop_app():")
+# Reference/s
+# https://stackoverflow.com/questions/1112343/how-do-i-capture-sigint-in-python
+def signal_handler(sig, frame):
+    os.killpg(0, signal.SIGKILL)
+
+
+signal.signal(signal.SIGTERM, signal_handler)
 
 
 # Start or stop the app
-if args.start:
-    start_app()
+try:
+    start_cmds = f"""
+    cd DatabaseServer && python3.10 manage.py runserver 37002;
+    """
+    capture_pidA = args.store_pid or args.capture_pid
 
-if args.stop:
-    stop_app()
+    self_app_management = SelfAppManager(start_cmds, capture_pid=capture_pidA, debug=True)
+    if args.start:
+        self_app_management.start_app()
+
+    if args.stop:
+        self_app_management.stop_app()
+finally:
+    # Not usually executed, unreliable
+    os.killpg(0, signal.SIGKILL)

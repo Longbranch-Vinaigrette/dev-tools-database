@@ -1,6 +1,6 @@
 """
 Create app
-python manage.py startapp sql
+python3.10 manage.py startapp APP_NAME
 Reference/s:
 https://docs.djangoproject.com/en/4.1/intro/tutorial01/
 """

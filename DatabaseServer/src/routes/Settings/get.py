@@ -18,7 +18,19 @@ class Main:
         self.route = route
 
     def post(self, request: HttpRequest):
-        """Upload data to settings table"""
+        """Get data from the settings table
+
+        Yes it's a post request, because you are supposed to send the keys that you are
+        requesting like this:
+        {
+            "keys": ["github_username", "github_token"]
+        }
+        And the response will be like this:
+        {
+            "github_username": [ITS VALUE],
+            "github_token": [ITS VALUE],
+        }
+        """
         data = DjangoUtils().validate_json_content_type(request)
 
         # If there is "debug" in data it means that there was an error
@@ -27,8 +39,11 @@ class Main:
 
             # Check if the required data was given
             try:
-                # This is just to inform the user in case that no data was given.
-                if len(list(body.keys())) <= 0:
+                # Inform the user in case the data is in a bad format.
+                keys_list = body["keys"]
+
+                # If there are no keys, return error.
+                if len(keys_list) <= 0:
                     raise Exception("No data given.")
             except Exception as ex:
                 print("Exception: ", ex)
@@ -42,15 +57,12 @@ class Main:
             # Try to execute the command
             try:
                 settings_table = SettingsTable()
+                data["data"] = {}
+                new_data = data["data"]
 
                 # To set multiple keys at once
-                for key in list(body.keys()):
-                    settings_table.upsert({
-                        "key": key,
-                        "value": body[key]
-                    }, {
-                        "key": key,
-                    })
+                for key in keys_list:
+                    new_data[key] = settings_table.get(key)
 
                 return send_response(data)
             except Exception as ex:

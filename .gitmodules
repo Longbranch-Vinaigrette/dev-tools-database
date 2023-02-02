@@ -4,3 +4,6 @@
 [submodule "dev_tools_utils"]
 	path = DatabaseServer/src/submodules/dev_tools_utils
 	url = git@github.com:Perseverancia-company/sub.dev-tools-utils.git
+[submodule "process_utils"]
+	path = DatabaseServer/src/submodules/process_utils
+	url = git@github.com:Perseverancia-company/sub.process-utils.git
